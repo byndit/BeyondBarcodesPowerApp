@@ -1,0 +1,231 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "BeyondBarcodes.de create your barcodes as easy as possible.\n",
+    "version": "1.0.0",
+    "title": "BeyondBarcodes",
+    "contact": {
+      "email": "moin@beyond365.de"
+    }
+  },
+  "host": "api.beyondbarcodes.de",
+  "basePath": "/v1",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [],
+  "produces": [],
+  "paths": {
+    "/barcode/{format}/{value}": {
+      "get": {
+        "tags": [
+          "customer"
+        ],
+        "summary": "Create a barcode",
+        "operationId": "GETbarcode",
+        "description": "Generates an image of a barcode for a defined type and height.\n",
+        "produces": [
+          "image/jpg"
+        ],
+        "security": [
+          {
+            "capacityToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "format",
+            "in": "path",
+            "description": "Choose a barcode encoding type which will be used",
+            "required": true,
+            "type": "string",
+            "enum": [
+              "CODE128",
+              "CODE128A",
+              "CODE128B",
+              "CODE128C",
+              "CODE39",
+              "EAN13",
+              "EAN8",
+              "EAN5",
+              "EAN2",
+              "UPC",
+              "UPCE",
+              "ITF14",
+              "ITF",
+              "MSI"
+            ]
+          },
+          {
+            "name": "value",
+            "in": "path",
+            "description": "This content is shown behind the barcode",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "height",
+            "in": "query",
+            "description": "This value will define the height in pixel to be used for the barcode",
+            "required": false,
+            "default": 100,
+            "type": "number"
+          },
+          {
+            "name": "foreground",
+            "in": "query",
+            "description": "This value will change the foreground color of the barcode code",
+            "required": false,
+            "default": "#000000",
+            "type": "string"
+          },
+          {
+            "name": "background",
+            "in": "query",
+            "description": "This value will change the background color of the barcode code",
+            "required": false,
+            "default": "#ffffff",
+            "type": "string"
+          },
+          {
+            "name": "margin",
+            "in": "query",
+            "description": "This value will change the margin of the barcode code",
+            "required": false,
+            "default": "10",
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "barcode generated",
+            "schema": {
+              "type": "string",
+              "format": "binary",
+              "x-ms-media-kind": "image",
+              "title": ""
+            }
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        }
+      }
+    },
+    "/qr/{value}": {
+      "get": {
+        "tags": [
+          "customer"
+        ],
+        "summary": "Create a qr code",
+        "operationId": "GETqr",
+        "description": "Generates an image of a qr code.\n",
+        "produces": [
+          "image/png"
+        ],
+        "security": [
+          {
+            "capacityToken": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "value",
+            "in": "path",
+            "description": "This content is shown behind the barcode",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "height",
+            "in": "query",
+            "description": "This value will define the height in pixel to be used for the barcode",
+            "required": false,
+            "default": 100,
+            "type": "number"
+          },
+          {
+            "name": "foreground",
+            "in": "query",
+            "description": "This value will change the foreground color of the qr code",
+            "required": false,
+            "default": "#000000",
+            "type": "string"
+          },
+          {
+            "name": "background",
+            "in": "query",
+            "description": "This value will change the background color of the qr code",
+            "required": false,
+            "default": "#ffffff",
+            "type": "string"
+          },
+          {
+            "name": "margin",
+            "in": "query",
+            "description": "This value will change the margin of the qr code",
+            "required": false,
+            "default": "10",
+            "type": "number"
+          },
+          {
+            "name": "errorCorrection",
+            "in": "query",
+            "description": "This value will change the errorCorrection of the qr code",
+            "default": "medium",
+            "type": "string",
+            "enum": [
+              "low",
+              "medium",
+              "quartile",
+              "high"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "barcode generated",
+            "schema": {
+              "type": "string",
+              "format": "binary",
+              "x-ms-media-kind": "image",
+              "title": ""
+            }
+          },
+          "400": {
+            "description": "bad input parameter"
+          }
+        }
+      }
+    },
+    "/capacity": {},
+    "/manage": {},
+    "/manage/{token}": {}
+  },
+  "definitions": {},
+  "parameters": {},
+  "responses": {},
+  "securityDefinitions": {
+    "capacityToken": {
+      "type": "apiKey",
+      "name": "token",
+      "in": "header"
+    },
+    "manageToken": {
+      "type": "apiKey",
+      "name": "token",
+      "in": "header"
+    }
+  },
+  "security": [],
+  "tags": [
+    {
+      "name": "customer",
+      "description": "Customer calls"
+    },
+    {
+      "name": "admin",
+      "description": "Admin only calls"
+    }
+  ]
+}
